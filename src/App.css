@@ -148,6 +148,7 @@ z-index: 1;
   left: 65%;
   color: rgb(211, 37, 66);
   top: 22%;
+  z-index: -10;
 
 }
 .feedpara{
@@ -156,7 +157,8 @@ z-index: 1;
 .app-name-container img {
   max-width: 300px;
   border-radius: 50%;  /* giving some space between the image and the name */
-  vertical-align: middle;  /* aligning the image with the middle of the text */
+  vertical-align: middle;
+    /* aligning the image with the middle of the text */
 }
 
 
@@ -254,5 +256,19 @@ margin-top: -40px;
   font-weight: bolder;
   left: 50%;
   transform: translate(-50%, -50%);
-
+  position: relative;
+  top: 17px;
+}
+.feedpagename:hover{
+background-color: black;
+}
+.profilep{
+  border-radius: 90%;
+}
+.feedprofilep{
+  border-radius: 50%;
+  position: absolute;
+  margin-left: -170px;
+  margin-top: 10px;
+  
 }

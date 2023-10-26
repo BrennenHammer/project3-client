@@ -34,10 +34,11 @@ function SkillsFeed() {
         {posts.map((post) => (
           <div key={post.id} className="post">
             <div className="post-header">
-            <Link to={`/user-profile/${post.author._id}`}>
-  <h3 className="feedpagename">{post.author.username}</h3>
-</Link>
-
+              <Link to={`/user-profile/${post.author._id}`}>
+              
+                <img className="feedprofilep" src={post.author.profilePicture} alt={`${post.author.username}'s profile`} width="50" height="50" />
+                <h3 className="feedpagename">{post.author.username}</h3>
+              </Link>
             </div>
             {checkFormat(post.mediaUrl) ? (
               <video className="videofeed" src={post.mediaUrl} controls />
@@ -45,7 +46,6 @@ function SkillsFeed() {
               <img src={post.mediaUrl} alt={post.description} />
             )}
             <p className="postcaption">{post.caption}</p>
-            
           </div>
         ))}
       </div>
@@ -54,12 +54,12 @@ function SkillsFeed() {
         <h1 className="feedpara">Skillz Arena</h1>
       </div>
       <footer>
-    <p>&copy; 2023 SkillzArena. All rights reserved.</p>
-</footer>
+        <p>&copy; 2023 SkillzArena. All rights reserved.</p>
+      </footer>
     </div>
-   
-
   );
 }
 
 export default SkillsFeed;
+
+

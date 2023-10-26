@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/authContext";
 import { post } from "../services/authService";
-
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -9,6 +10,10 @@ const Signup = () => {
   });
 
   const [message, setMessage] = useState('');
+
+  const { storeToken, authenticateUser } = useContext(AuthContext)
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +33,9 @@ const Signup = () => {
 
     post('/auth/signup', formData, false)
     .then(response => {
+        storeToken(response.data.authToken)
+        authenticateUser()
+        navigate("/profile")
         setMessage('Signup successful! Please log in.');
         setFormData({ email: '', username: '', password: '' });
     })
