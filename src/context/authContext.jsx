@@ -27,7 +27,8 @@ function AuthProvider({ children }) {
       
       get('/auth/verify')
       .then((response) => {
-        const user = response.data;        
+        const user = response.data;
+        console.log("User from auth===>", user)        
         setIsLoggedIn(true);
         setIsLoading(false);
         setUser(user);        

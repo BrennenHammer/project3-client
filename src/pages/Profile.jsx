@@ -1,29 +1,89 @@
-//dont have to do but what be cool to have gears and new look and all the fame
-//likes, subs, rating bar w sub Count
-//fire!!
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import { get } from "../services/authService";
+import Subscribers from './Subscribers';
 
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { AuthContext } from "../context/authContext"
 
 const Profile = () => {
+    const { user } = useContext(AuthContext);
+    const [userPosts, setUserPosts] = useState([]);
+    const [subscribers, setSubscribers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [showSubscribersModal, setShowSubscribersModal] = useState(false);
 
-    const { user } = useContext(AuthContext)
-
-  return (
-    <div>
-        <h1>Profile</h1>
-
-        {
-            user &&
-        
-            <h2>Welcome {user.name}!</h2>
+    useEffect(() => {
+        if (user && user._id) {
+            get(`/profile/posts?userId=${user._id}`)
+                .then(response => {
+                    setUserPosts(response.data);
+                    return get(`/subscribers/${user._id}`);
+                })
+                .then(response => {
+                    setSubscribers(response.data);
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
         }
+    }, [user]);
 
-        <Link to='/Addpost'>Add post</Link>
+    let checkFormat = (image) => {
+        let array = image.split('.');
+        return array[array.length - 1] === 'mp4';
+    };
 
-    </div>
-  )
-}
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
 
-export default Profile
+    return (
+        <div>
+            
+            <h1>profile</h1>
+        
+            {user && <h2>Welcome {user.username}!</h2>}
+            <img src={user.profilePicture} alt={`${user.username}'s profile`} />
+            <div className="user-posts">
+                {userPosts.map(post => {
+                    console.log(post); 
+                    return (
+                        <div key={post._id} className="post">
+                            <div className="post-header">
+                                <h3>{post.user}</h3>
+                            </div>
+                            {
+                                checkFormat(post.mediaUrl) ? 
+                                <video className="videofeed" src={post.mediaUrl} controls /> 
+                                : 
+                                <img src={post.mediaUrl} alt={post.caption} />
+                                
+                            }
+                            <p>{post.caption}</p>
+                            
+                        </div>
+                    );
+                })}
+            </div>
+
+            <button onClick={() => setShowSubscribersModal(true)}>Subscribers</button>
+            
+            {showSubscribersModal && (
+                <Subscribers 
+                    subscribers={subscribers} 
+                    onClose={() => setShowSubscribersModal(false)}
+                />
+            )}
+            
+            <footer >
+    <p>&copy; 2023 SkillzArena. All rights reserved.</p>
+</footer>
+        </div>
+    );
+};
+
+export default Profile;
+

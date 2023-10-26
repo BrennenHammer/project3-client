@@ -7,6 +7,7 @@ import SkillsFeed from './pages/Feed'
 import Profile from './pages/Profile'
 import Addpost from './pages/Addpost'
 import Subscribers from './pages/Subscribers'
+import UserProfile from "./pages/UserProfile";
 function App() {
 
   const getToken = () => {
@@ -41,7 +42,8 @@ function App() {
     <Route path="/feed" element={<SkillsFeed />} />
     <Route path='/profile' element={ <Profile /> } />
     <Route path='/addpost' element={ <Addpost /> } />
-    <Route path='/subscibers' element={ <Subscribers /> } />
+    <Route path='/subscribers' element={ <Subscribers /> } />
+    <Route path="/user-profile/:id" element={ <UserProfile /> }/>
 
   </Route>
 

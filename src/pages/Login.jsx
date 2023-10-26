@@ -37,7 +37,9 @@ const Login = () => {
     };
     
     return (
-      <div className="LoginPage">
+      <div className='loginvw'>
+      <> <p className="loginp">Lets get you're talent on display!</p>
+      <div className="Logindiv">
         <h1>Login</h1>
   
         <form onSubmit={handleLoginSubmit}>
@@ -65,6 +67,8 @@ const Login = () => {
         <Link to="/Feed"> log in..</Link>
 
 
+      </div>
+      </>
       </div>
     )
 }

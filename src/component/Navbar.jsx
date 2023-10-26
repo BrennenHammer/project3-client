@@ -28,7 +28,9 @@ const Navbar = () => {
                     <button onClick={logOutUser}>Logout</button>
                     <button onClick={() => setIsAddPostOpen(true)}>Add Post</button>
                     {isAddPostOpen && <AddPost onClose={() => setIsAddPostOpen(false)} />}
+                    <p>SkillzArena 2023 @</p>
                 </>
+               
             }
         </nav>
     );

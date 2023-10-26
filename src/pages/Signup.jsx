@@ -37,7 +37,9 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="loginvw">
+    <> <p className="signupP">Do you have talent? Show the world!</p>
+    <div className="Logindiv">
       {message && <p>{message}</p>} {}
 
       <form onSubmit={handleSubmit}>
@@ -76,6 +78,8 @@ const Signup = () => {
         <button type="submit">Signup</button>
       </form>
       <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+    </>
     </div>
   );
 };
