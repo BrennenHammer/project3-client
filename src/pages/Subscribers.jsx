@@ -2,12 +2,18 @@ import React, { useContext } from "react";
 import axios from 'axios';
 import { AuthContext } from "../context/authContext";
 import { Link } from "react-router-dom";
+
 const Subscribers = ({ subscribers = [], onClose }) => {
     const { user } = useContext(AuthContext);
+
+    const isSubscribed = (subscriberId) => {
+        return user && user.following && user.following.includes(subscriberId);
+    };
 
     const handleSubscribe = async (userIdToSubscribeTo) => {
         try {
             await axios.post(`/subscribers/subscribe/${userIdToSubscribeTo}`, { subscriberId: user._id });
+            // You can update user context or re-fetch data if necessary
         } catch (err) {
             console.error('Error subscribing:', err);
         }
@@ -16,6 +22,7 @@ const Subscribers = ({ subscribers = [], onClose }) => {
     const handleUnsubscribe = async (userIdToUnsubscribeFrom) => {
         try {
             await axios.delete(`/subscribers/unsubscribe/${userIdToUnsubscribeFrom}`, { data: { subscriberId: user._id } });
+
         } catch (err) {
             console.error('Error unsubscribing:', err);
         }
@@ -27,15 +34,17 @@ const Subscribers = ({ subscribers = [], onClose }) => {
             <p>subscribers: {user && Array.isArray(user.subscribers) ? user.subscribers.length : 0}</p>
 
             <Link to="/profile">
-            <button onClick={onClose}>Close</button>
+                <button onClick={onClose}>Close</button>
             </Link>
             <ul>
                 {subscribers.map(sub => (
                     <li key={sub._id}>
                         <img src={sub.subscriberId.profileImage} alt={sub.subscriberId.name} width="50" height="50" />
                         {sub.subscriberId.name}
-                        <button onClick={() => handleSubscribe(sub.subscriberId._id)}>Subscribe</button>
-                        <button onClick={() => handleUnsubscribe(sub.subscriberId._id)}>Unsubscribe</button>
+                        {isSubscribed(sub.subscriberId._id) ? 
+                            <button onClick={() => handleUnsubscribe(sub.subscriberId._id)}>Unsubscribe</button> :
+                            <button onClick={() => handleSubscribe(sub.subscriberId._id)}>Subscribe</button>
+                        }
                     </li>
                 ))}
             </ul>
@@ -47,3 +56,4 @@ const Subscribers = ({ subscribers = [], onClose }) => {
 };
 
 export default Subscribers;
+

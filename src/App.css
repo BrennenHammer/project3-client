@@ -127,6 +127,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+
 }
 
 .skills-feed{
@@ -271,4 +272,24 @@ background-color: black;
   margin-left: -170px;
   margin-top: 10px;
   
+}
+
+.delete-post-btn {
+  position: relative;
+  top: 0;
+  right: -40%;
+  background-color: red;  /* or another color of your choice */
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+}
+
+
+.likebutton{
+position: relative;
+left: -41.2%;
+top: 100px;
+height: 55px;
+width: 55px;
+
 }
